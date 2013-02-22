@@ -6,6 +6,44 @@
 	<link type="text/css" rel="stylesheet" media="all" href="css/style.css?v=1" />
 </head>
 <body>
+	<canvas id="cnv"></canvas>
+	<script src="js/base.js"></script>
+	<script>
+
+var rect1 = new Rect(20,20,300,150,'#3399cc',4,'#FFF');
+rect1.Start = function(){
+	this.moveTrigger = true;
+}
+rect1.Update = function(){
+	if(this.moveTrigger){
+		this.y += 5;
+	} else {
+		this.y -= 5;
+	}
 	
+	if(this.y <= 4 || this.y >= window.innerHeight-this.height-4){
+		this.moveTrigger = !this.moveTrigger;
+	}
+}
+
+var rect2 = new Rect(50,300,230,400,'#cc9933',8,'#300');
+rect2.Start = function(){
+	this.moveTrigger = true;
+}
+rect2.Update = function(){
+	if(this.moveTrigger){
+		this.x += 5;
+	} else {
+		this.x -= 5;
+	}
+	
+	if(this.x <= 8 || this.x >= window.innerWidth-this.width-8){
+		this.moveTrigger = !this.moveTrigger;
+	}
+}
+
+game.Run();
+		
+	</script>
 </body>
 </html>
