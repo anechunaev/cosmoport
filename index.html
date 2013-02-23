@@ -9,6 +9,15 @@
 	<canvas id="cnv"></canvas>
 	<script src="js/base.js"></script>
 	<script>
+	
+
+var tileset = new Image();
+tileset.src = 'images/tileset.png';
+var testp = new Image();
+testp.src = 'images/test.jpg';
+
+var tile = new Sprite(tileset, 200, 200, 32, 32, 96, 0, 32, 32);
+var test = new Sprite(testp, 250, 250, 64, 100, 96, 0, 128, 128);
 
 var rect1 = new Rect(20,20,300,150,'#3399cc',4,'#FFF');
 rect1.Start = function(){
@@ -42,8 +51,11 @@ rect2.Update = function(){
 	}
 }
 
-game.Run();
-		
+window.onload = function(){
+	game.Run();
+}
+
+
 	</script>
 </body>
 </html>

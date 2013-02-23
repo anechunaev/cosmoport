@@ -21,9 +21,10 @@ var Sprite = function(image, sx, sy, sw, sh, dx, dy, dw, dh)
 	this.Update = function(){}
 	
 	this.Draw = function(){
-		game.ctx.drawImage(this.image, this.sx, this.sy, this.sw, this.sh, this.dx, this.dy, this.dw, this.dh);
+		game.ctx.drawImage(this.image, this.dx, this.dy, this.dw, this.dh, this.sx, this.sy, this.sw, this.sh);
 	}
 	
+	game.sources.push(this);
 	game.obj2draw.push(this);
 }
 
@@ -54,15 +55,29 @@ var game = {
 	ctx : document.getElementById("cnv").getContext("2d"),
 	cam : new Camera(),
 	obj2draw : new Array(),
+	sources : new Array(),
+	status : 'init',
 	
 	Start : function(){
+		this.status = 'loading';
+	
 		this.cnv.width = window.innerWidth - 3;
 		this.cnv.height = window.innerHeight - 3;
 		this.cam.width = window.innerWidth;
 		this.cam.height = window.innerHeight;
 		
-		for(i in this.obj2draw)
-		{
+		var k = 0;
+		while(this.status != 'ready'){
+			if(this.sources[k].image.complete){
+				k++;
+				if(k >= this.sources.length){
+					this.status = 'ready';
+					break;
+				}
+			}
+		}
+		
+		for(var i in this.obj2draw){
 			this.obj2draw[i].Start();
 		}
 	},
@@ -70,8 +85,7 @@ var game = {
 	Draw : function(){
 		this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
 		
-		for(i in this.obj2draw)
-		{
+		for(var i in this.obj2draw){
 			this.obj2draw[i].Update();
 			this.obj2draw[i].Draw();
 		}
@@ -79,6 +93,9 @@ var game = {
 	
 	Run : function(options){
 		this.Start();
-		setInterval(function(){ game.Draw() }, 17);
+		
+		if(this.status == 'ready')		{
+			setInterval(function(){ game.Draw() }, 17);
+		}
 	}
 };
