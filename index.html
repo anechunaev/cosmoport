@@ -13,11 +13,12 @@
 
 var tileset = new Image();
 tileset.src = 'images/tileset.png';
-var testp = new Image();
-testp.src = 'images/test.jpg';
+var testp1 = new Image();
+testp1.src = 'images/test.jpg';
+var testp2 = new Image();
+testp2.src = 'images/urok1.6.png';
 
 var tile = new Sprite(tileset, 200, 200, 32, 32, 96, 0, 32, 32);
-var test = new Sprite(testp, 250, 250, 64, 100, 96, 0, 128, 128);
 
 var rect1 = new Rect(20,20,300,150,'#3399cc',4,'#FFF');
 rect1.Start = function(){
@@ -35,15 +36,17 @@ rect1.Update = function(){
 	}
 }
 
-var rect2 = new Rect(50,300,230,400,'#cc9933',8,'#300');
+var test1 = new Sprite(testp1, 250, 250, 64, 100, 96, 0, 128, 128);
+
+var rect2 = new Rect(50,300,230,400,'rgba(255,128,0,0.5)',8,'rgba(88,0,0,0.7)');
 rect2.Start = function(){
 	this.moveTrigger = true;
 }
 rect2.Update = function(){
 	if(this.moveTrigger){
-		this.x += 5;
+		this.x += 7;
 	} else {
-		this.x -= 5;
+		this.x -= 7;
 	}
 	
 	if(this.x <= 8 || this.x >= window.innerWidth-this.width-8){
@@ -51,8 +54,14 @@ rect2.Update = function(){
 	}
 }
 
+var test2 = new Sprite(testp2, 200, 300, 196, 184, 0, 0, 196, 184);
+
+var circ1 = new Circle(50, 250, 200, Math.PI/2, 3*Math.PI/2, true, 'rgba(0,0,0,0)', 50, 'rgba(255,255,255,0.25)');
+
+var scene1 = new Scene(0,0,1000,1000,[tile, rect1, test1, rect2, test2, circ1])
+
 window.onload = function(){
-	game.Run();
+	game.Run({scene : scene1});
 }
 
 

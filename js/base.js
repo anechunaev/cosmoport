@@ -1,8 +1,15 @@
-var Camera = function(){
-	this.width = 0;
-	this.height = 0;
-	this.dx = 0;
-	this.dy = 0;
+var Camera = function(x, y){
+	this.x = x;
+	this.y = y;
+}
+
+var Scene = function(dx, dy, w, h, obj, src){
+	this.dx = dx;
+	this.dy = dy;
+	this.width = w;
+	this.wheight = h;
+	this.objects = obj;
+	this.sources = src;
 }
 
 var Sprite = function(image, sx, sy, sw, sh, dx, dy, dw, dh)
@@ -38,10 +45,13 @@ var Rect = function(x, y, width, height, color, stroke, strokeColor){
 	this.strokeColor = strokeColor;
 	
 	this.Draw = function(){
-		game.ctx.fillStyle = this.strokeColor;
-		game.ctx.fillRect(this.x-this.stroke, this.y-this.stroke, this.width+this.stroke*2, this.height+this.stroke*2);
+		game.ctx.beginPath();
+		game.ctx.rect(this.x, this.y, this.width, this.height);
 		game.ctx.fillStyle = this.color;
-		game.ctx.fillRect(this.x, this.y, this.width, this.height);
+		game.ctx.fill();
+		game.ctx.lineWidth = this.stroke;
+		game.ctx.strokeStyle = this.strokeColor;
+		game.ctx.stroke();
 	}
 	
 	this.Start = function(){}
@@ -50,21 +60,52 @@ var Rect = function(x, y, width, height, color, stroke, strokeColor){
 	game.obj2draw.push(this);
 }
 
+var Circle = function(x, y, r, sdeg, edeg, ccw, color, stroke, strokeColor){
+	this.x = x;
+	this.y = y;
+	this.r = r;
+	this.sdeg = sdeg;
+	this.edeg = edeg;
+	this.ccw = ccw;
+	this.stroke = stroke;
+	this.color = color;
+	this.strokeColor = strokeColor;
+	
+	this.Start = function(){};
+	this.Update = function(){};
+	
+	this.Draw = function(){
+		game.ctx.beginPath();
+		game.ctx.arc(this.x, this.y, this.r, this.sdeg, this.edeg, this.ccw);
+		game.ctx.fillStyle = this.color;
+		game.ctx.fill();
+		game.ctx.lineWidth = this.stroke;
+		game.ctx.strokeStyle = this.strokeColor;
+		game.ctx.stroke();
+	}
+	
+	game.obj2draw.push(this);
+}
+
+var CustomObject = function(){
+	this.Draw = function(){};
+	this.Start = function(){};
+	this.Update = function(){};
+}
+
 var game = {
 	cnv : document.getElementById("cnv"),
 	ctx : document.getElementById("cnv").getContext("2d"),
-	cam : new Camera(),
 	obj2draw : new Array(),
 	sources : new Array(),
 	status : 'init',
+	scene : {},
 	
 	Start : function(){
 		this.status = 'loading';
 	
 		this.cnv.width = window.innerWidth - 3;
 		this.cnv.height = window.innerHeight - 3;
-		this.cam.width = window.innerWidth;
-		this.cam.height = window.innerHeight;
 		
 		var k = 0;
 		while(this.status != 'ready'){
@@ -92,9 +133,10 @@ var game = {
 	},
 	
 	Run : function(options){
-		this.Start();
+		this.Start(options);
 		
-		if(this.status == 'ready')		{
+		if(this.status == 'ready'){
+			this.status = 'run';
 			setInterval(function(){ game.Draw() }, 17);
 		}
 	}
