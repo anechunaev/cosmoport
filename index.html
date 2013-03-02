@@ -8,9 +8,9 @@
 <body>
 	<canvas id="cnv"></canvas>
 	<script src="js/base.js"></script>
+	<script src="js/shapes.js"></script>
 	<script>
 	
-
 var tileset = new Image();
 tileset.src = 'images/tileset.png';
 var testp1 = new Image();
@@ -18,9 +18,9 @@ testp1.src = 'images/test.jpg';
 var testp2 = new Image();
 testp2.src = 'images/urok1.6.png';
 
-var tile = new Sprite(tileset, 200, 200, 32, 32, 96, 0, 32, 32);
+var tile = new Sprite({image:tileset, x:200, y:200, width:32, height:32, dx:96, dy:0});
 
-var rect1 = new Rect(20,20,300,150,'#3399cc',4,'#FFF');
+var rect1 = new Rect({x:20,y:20,width:300,height:150,color:'#39C',stroke:4,strokeColor:'#FFF'});
 rect1.Start = function(){
 	this.moveTrigger = true;
 }
@@ -36,9 +36,9 @@ rect1.Update = function(){
 	}
 }
 
-var test1 = new Sprite(testp1, 250, 250, 64, 100, 96, 0, 128, 128);
+var test1 = new Sprite({image:testp1,x:250,y:250,width:64,height:100,dx:96,deltaWidth:128,deltaHeight:128});
 
-var rect2 = new Rect(50,300,230,400,'rgba(255,128,0,0.5)',8,'rgba(88,0,0,0.7)');
+var rect2 = new Rect({x:50,y:300,width:230,height:400,color:'rgba(255,128,0,0.5)',stroke:8,strokeColor:'rgba(88,0,0,0.7)'});
 rect2.Start = function(){
 	this.moveTrigger = true;
 }
@@ -54,16 +54,15 @@ rect2.Update = function(){
 	}
 }
 
-var test2 = new Sprite(testp2, 200, 300, 196, 184, 0, 0, 196, 184);
+var test2 = new Sprite({image:testp2, x:200, y:300, width:196, height:184});
+var circ1 = new Circle({x:50,y:250,radius:200,startDegrees:Math.PI/2,endDegrees:3*Math.PI/2,counterClockwise:true,color:'rgba(0,0,0,0)',stroke:50,strokeColor:'#FFF'});
+var circ2 = new Circle({x:300, y:300, radius:20, color:'#FFF'});
 
-var circ1 = new Circle(50, 250, 200, Math.PI/2, 3*Math.PI/2, true, 'rgba(0,0,0,0)', 50, 'rgba(255,255,255,0.25)');
-
-var scene1 = new Scene(0,0,1000,1000,[tile, rect1, test1, rect2, test2, circ1])
+var scene1 = new Scene({x:0,y:0,width:1000,height:1000,objects:[tile, rect1, test1, rect2, test2, circ1, circ2], sources:[tileset,testp1,testp2]});
 
 window.onload = function(){
 	game.Run({scene : scene1});
 }
-
 
 	</script>
 </body>
