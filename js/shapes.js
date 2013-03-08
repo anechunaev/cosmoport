@@ -2,10 +2,11 @@ var Sprite = function(options){
 
 	// Vars
 	this.image = options.image;
-	this.sx = options.x;
-	this.sy = options.y;
-	this.sw = options.width;
-	this.sh = options.height;
+	this.x = options.x;
+	this.y = options.y;
+	this.z = options.z;
+	this.w = options.width;
+	this.h = options.height;
 	this.dx = options.dx;
 	this.dy = options.dy;
 	this.dw = options.deltaWidth;
@@ -13,8 +14,8 @@ var Sprite = function(options){
 	
 	// Checking if some important vars exists
 	if(options.deltaWidth === undefined || options.deltaHeight === undefined){
-		this.dw = this.sw;
-		this.dh = this.sh;
+		this.dw = this.w;
+		this.dh = this.h;
 	}
 	
 	if(options.dx === undefined){
@@ -26,20 +27,19 @@ var Sprite = function(options){
 	}
 	
 	if(options.width === undefined){
-		this.sw = this.image.width;
+		this.w = this.image.width;
 	}
 	
-	if(options.width === undefined){
-		this.sw = this.image.width;
+	if(options.height === undefined){
+		this.h = this.image.height;
 	}
-	
-	// Methods
-	this.Start = function(){}
-	this.Update = function(){}
-	
-	this.Draw = function(){
-		game.ctx.drawImage(this.image, this.dx, this.dy, this.dw, this.dh, this.sx, this.sy, this.sw, this.sh);
-	}
+}
+Sprite.prototype = {
+	"Draw"	:	function(ctx){
+					ctx.drawImage(this.image, this.dx, this.dy, this.dw, this.dh, this.x, this.y, this.w, this.h);
+				},
+	"Start"	:	function(){},
+	"Update":	function(){}
 }
 
 var Rect = function(options){
@@ -47,6 +47,7 @@ var Rect = function(options){
 	// Vars
 	this.x = options.x;
 	this.y = options.y;
+	this.z = options.z;
 	this.width = options.width;
 	this.height = options.height;
 	this.color = options.color;
@@ -65,22 +66,21 @@ var Rect = function(options){
 	if(options.strokeColor === undefined){
 		this.strokeColor = '#000';
 	}
-	
-	// Methods
-	this.Draw = function(){
-		game.ctx.beginPath();
-		game.ctx.rect(this.x, this.y, this.width, this.height);
-		game.ctx.fillStyle = this.color;
-		game.ctx.fill();
-		if(this.stroke != 0){
-			game.ctx.lineWidth = this.stroke;
-			game.ctx.strokeStyle = this.strokeColor;
-			game.ctx.stroke();
-		}
-	}
-	
-	this.Start = function(){}
-	this.Update = function(){}
+}
+Rect.prototype = {
+	"Draw"	:	function(ctx){
+					ctx.beginPath();
+					ctx.rect(this.x, this.y, this.width, this.height);
+					ctx.fillStyle = this.color;
+					ctx.fill();
+					if(this.stroke != 0){
+						ctx.lineWidth = this.stroke;
+						ctx.strokeStyle = this.strokeColor;
+						ctx.stroke();
+					}
+				},
+	"Start"	:	function(){},
+	"Update":	function(){}
 }
 
 var Circle = function(options){
@@ -88,6 +88,7 @@ var Circle = function(options){
 	// Vars
 	this.x = options.x;
 	this.y = options.y;
+	this.z = options.z;
 	this.r = options.radius;
 	this.sdeg = options.startDegrees;
 	this.edeg = options.endDegrees;
@@ -121,22 +122,21 @@ var Circle = function(options){
 	if(options.strokeColor === undefined){
 		this.strokeColor = '#000';
 	}
-	
-	// Methods
-	this.Start = function(){};
-	this.Update = function(){};
-	
-	this.Draw = function(){
-		game.ctx.beginPath();
-		game.ctx.arc(this.x, this.y, this.r, this.sdeg, this.edeg, this.ccw);
-		game.ctx.fillStyle = this.color;
-		game.ctx.fill();
-		if(this.stroke != 0){
-			game.ctx.lineWidth = this.stroke;
-			game.ctx.strokeStyle = this.strokeColor;
-			game.ctx.stroke();
-		}
-	}
+}
+Circle.prototype = {
+	"Draw"	:	function(ctx){
+					ctx.beginPath();
+					ctx.arc(this.x, this.y, this.r, this.sdeg, this.edeg, this.ccw);
+					ctx.fillStyle = this.color;
+					ctx.fill();
+					if(this.stroke != 0){
+						ctx.lineWidth = this.stroke;
+						ctx.strokeStyle = this.strokeColor;
+						ctx.stroke();
+					}
+				},
+	"Start"	:	function(){},
+	"Update":	function(){}
 }
 
 var CustomObject = function(options){

@@ -48,7 +48,7 @@ var game = {
 		
 		for(var i in this.scene.objects){
 			this.scene.objects[i].Update();
-			this.scene.objects[i].Draw();
+			this.scene.objects[i].Draw(this.ctx);
 			this.scene.GUI();
 		}
 	},
