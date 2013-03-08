@@ -14,7 +14,7 @@ var Scene = function(options){
 	this.GUI = function(){}
 }
 
-var game = {
+var Game = {
 	cnv : document.getElementById("cnv"),
 	ctx : document.getElementById("cnv").getContext("2d"),
 	status : 'init',
@@ -25,7 +25,19 @@ var game = {
 		this.scene = options.scene;
 		this.cnv.width = window.innerWidth - 3;
 		this.cnv.height = window.innerHeight - 3;
+
+		// Insertion sort
+		for(var i in this.scene.objects){
+			if(this.scene.objects[i].z === undefined){this.scene.objects[i].z = i}
+			var obj = this.scene.objects[i];
+			var key = obj.z;
+			for(j = i-1; j > -1 && this.scene.objects[j].z > key; j--){
+				this.scene.objects[j+1] = this.scene.objects[j];
+			}
+			this.scene.objects[j+1] = obj;
+		}
 		
+		// Loading sources
 		var k = 0;
 		while(this.status != 'ready'){
 			if(this.scene.sources[k].complete){
@@ -38,6 +50,7 @@ var game = {
 			if(this.scene.sources.length==0) break;
 		}
 		
+		// Run "Start" functions
 		for(var i in this.scene.objects){
 			this.scene.objects[i].Start();
 		}
@@ -58,7 +71,7 @@ var game = {
 		
 		if(this.status == 'ready'){
 			this.status = 'run';
-			setInterval(function(){ game.Draw() }, 17);
+			setInterval(function(){ Game.Draw() }, 17);
 		}
 	}
 };

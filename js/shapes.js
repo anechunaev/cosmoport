@@ -11,6 +11,7 @@ var Sprite = function(options){
 	this.dy = options.dy;
 	this.dw = options.deltaWidth;
 	this.dh = options.deltaHeight;
+	this.hidden = options.hidden;
 	
 	// Checking if some important vars exists
 	if(options.deltaWidth === undefined || options.deltaHeight === undefined){
@@ -36,7 +37,7 @@ var Sprite = function(options){
 }
 Sprite.prototype = {
 	"Draw"	:	function(ctx){
-					ctx.drawImage(this.image, this.dx, this.dy, this.dw, this.dh, this.x, this.y, this.w, this.h);
+					if(!this.hidden) ctx.drawImage(this.image, this.dx, this.dy, this.dw, this.dh, this.x, this.y, this.w, this.h);
 				},
 	"Start"	:	function(){},
 	"Update":	function(){}
@@ -53,6 +54,7 @@ var Rect = function(options){
 	this.color = options.color;
 	this.stroke = options.stroke;
 	this.strokeColor = options.strokeColor;
+	this.hidden = options.hidden;
 	
 	// Checking vars
 	if(options.color === undefined){
@@ -64,19 +66,21 @@ var Rect = function(options){
 	}
 	
 	if(options.strokeColor === undefined){
-		this.strokeColor = '#000';
+		this.strokeColor = 'rgba(0,0,0,1)';
 	}
 }
 Rect.prototype = {
 	"Draw"	:	function(ctx){
-					ctx.beginPath();
-					ctx.rect(this.x, this.y, this.width, this.height);
-					ctx.fillStyle = this.color;
-					ctx.fill();
-					if(this.stroke != 0){
-						ctx.lineWidth = this.stroke;
-						ctx.strokeStyle = this.strokeColor;
-						ctx.stroke();
+					if(!this.hidden){
+						ctx.beginPath();
+						ctx.rect(this.x, this.y, this.width, this.height);
+						ctx.fillStyle = this.color;
+						ctx.fill();
+						if(this.stroke != 0){
+							ctx.lineWidth = this.stroke;
+							ctx.strokeStyle = this.strokeColor;
+							ctx.stroke();
+						}
 					}
 				},
 	"Start"	:	function(){},
@@ -96,6 +100,7 @@ var Circle = function(options){
 	this.stroke = options.stroke;
 	this.color = options.color;
 	this.strokeColor = options.strokeColor;
+	this.hidden = options.hidden;
 	
 	// Checking vars
 	if(options.startDegrees === undefined){
@@ -120,19 +125,21 @@ var Circle = function(options){
 	}
 	
 	if(options.strokeColor === undefined){
-		this.strokeColor = '#000';
+		this.strokeColor = 'rgba(0,0,0,1)';
 	}
 }
 Circle.prototype = {
 	"Draw"	:	function(ctx){
-					ctx.beginPath();
-					ctx.arc(this.x, this.y, this.r, this.sdeg, this.edeg, this.ccw);
-					ctx.fillStyle = this.color;
-					ctx.fill();
-					if(this.stroke != 0){
-						ctx.lineWidth = this.stroke;
-						ctx.strokeStyle = this.strokeColor;
-						ctx.stroke();
+					if(!this.hidden){
+						ctx.beginPath();
+						ctx.arc(this.x, this.y, this.r, this.sdeg, this.edeg, this.ccw);
+						ctx.fillStyle = this.color;
+						ctx.fill();
+						if(this.stroke != 0){
+							ctx.lineWidth = this.stroke;
+							ctx.strokeStyle = this.strokeColor;
+							ctx.stroke();
+						}
 					}
 				},
 	"Start"	:	function(){},

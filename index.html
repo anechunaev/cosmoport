@@ -18,7 +18,7 @@ testp1.src = 'images/test.jpg';
 var testp2 = new Image();
 testp2.src = 'images/urok1.6.png';
 
-var tile = new Sprite({image:tileset, x:200, y:200, width:32, height:32, dx:96, dy:0});
+var tile = new Sprite({image:tileset, x:200, y:200, z:999, width:32, height:32, dx:96, dy:0});
 
 var rect1 = new Rect({x:20,y:20,width:300,height:150,color:'#39C',stroke:4,strokeColor:'#FFF'});
 rect1.Start = function(){
@@ -36,7 +36,7 @@ rect1.Update = function(){
 	}
 }
 
-var test1 = new Sprite({image:testp1,x:250,y:250,width:64,height:100,dx:96,deltaWidth:128,deltaHeight:128});
+var test1 = new Sprite({image:testp1,x:250,y:250,width:64,height:100,dx:96,deltaWidth:128,deltaHeight:128,hidden:true});
 
 var rect2 = new Rect({x:50,y:300,width:230,height:400,color:'rgba(255,128,0,0.5)',stroke:8,strokeColor:'rgba(88,0,0,0.7)'});
 rect2.Start = function(){
@@ -61,7 +61,7 @@ var circ2 = new Circle({x:300, y:300, radius:20, color:'#FFF'});
 var scene1 = new Scene({x:0,y:0,width:1000,height:1000,objects:[tile, rect1, test1, rect2, test2, circ1, circ2], sources:[tileset,testp1,testp2]});
 
 window.onload = function(){
-	game.Run({scene : scene1});
+	Game.Run({scene : scene1});
 }
 
 	</script>
