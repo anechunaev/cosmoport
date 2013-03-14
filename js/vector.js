@@ -12,8 +12,8 @@ var Vector2 = function(x, y){
 	this.down = {x: 0, y: 1};
 	this.right = {x: 1, y: 0};
 	
-	if(typeof x === undefined) this.x = 0;
-	if(typeof y === undefined) this.y = 0;
+	if(typeof x === 'undefined') this.x = 0;
+	if(typeof y === 'undefined') this.y = 0;
 }
 
 /**
@@ -33,7 +33,7 @@ var Vector2 = function(x, y, z){
 	this.down = {x: 0, y: 1, z: 0};
 	this.right = {x: 1, y: 0, z: 0};
 	
-	if(typeof x === undefined) this.x = 0;
-	if(typeof y === undefined) this.y = 0;
-	if(typeof z === undefined) this.z = 0;
+	if(typeof x === 'undefined') this.x = 0;
+	if(typeof y === 'undefined') this.y = 0;
+	if(typeof z === 'undefined') this.z = 0;
 }

@@ -10,10 +10,10 @@ var Transform = function(options){
 	this.angle = options.angle;
 	this.scale = options.scale; // Vector2
 	
-	if(typeof options.position === undefined) this.position = Vector2.zero;
-	if(typeof options.localPosition === undefined) this.localPosition = Vector2.zero;
-	if(typeof options.angle === undefined) this.angle = 0;
-	if(typeof options.scale === undefined) this.scale = Vector2.one;
+	if(typeof options.position === 'undefined') this.position = Vector2.zero;
+	if(typeof options.localPosition === 'undefined') this.localPosition = Vector2.zero;
+	if(typeof options.angle === 'undefined') this.angle = 0;
+	if(typeof options.scale === 'undefined') this.scale = Vector2.one;
 }
 Transform.prototype = {
 					/**

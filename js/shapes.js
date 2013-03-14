@@ -22,28 +22,28 @@ var Sprite = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking if some important vars exists
-	if(typeof options.rotation === undefined){
+	if(typeof options.rotation === 'undefined'){
 		this.rot = 0;
 	}
 	
-	if(typeof options.deltaWidth === undefined || typeof options.deltaHeight === undefined){
+	if(typeof options.deltaWidth === 'undefined' || typeof options.deltaHeight === 'undefined'){
 		this.dw = this.w;
 		this.dh = this.h;
 	}
 	
-	if(typeof options.dx === undefined){
+	if(typeof options.dx === 'undefined'){
 		this.dx = 0;
 	}
 	
-	if(typeof options.dy === undefined){
+	if(typeof options.dy === 'undefined'){
 		this.dy = 0;
 	}
 	
-	if(typeof options.width === undefined){
+	if(typeof options.width === 'undefined'){
 		this.w = this.image.width;
 	}
 	
-	if(typeof options.height === undefined){
+	if(typeof options.height === 'undefined'){
 		this.h = this.image.height;
 	}
 }
@@ -90,19 +90,19 @@ var Rect = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking vars
-	if(typeof options.rotation === undefined){
+	if(typeof options.rotation === 'undefined'){
 		this.rot = 0;
 	}
 	
-	if(typeof options.color === undefined){
+	if(typeof options.color === 'undefined'){
 		this.color = 'rgba(0,0,0,0)';
 	}
 	
-	if(typeof options.stroke === undefined){
+	if(typeof options.stroke === 'undefined'){
 		this.stroke = 0;
 	}
 	
-	if(typeof options.strokeColor === undefined){
+	if(typeof options.strokeColor === 'undefined'){
 		this.strokeColor = 'rgba(0,0,0,1)';
 	}
 }
@@ -159,32 +159,32 @@ var Circle = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking vars
-	if(typeof options.rotation === undefined){
+	if(typeof options.rotation === 'undefined'){
 		this.rot = 0;
 	}
 	
-	if(typeof options.startDegrees === undefined){
+	if(typeof options.startDegrees === 'undefined'){
 		this.sdeg = 0;
 	}
 	
-	if(typeof options.endDegrees === undefined){
+	if(typeof options.endDegrees === 'undefined'){
 		this.edeg = Math.PI*2;
 	}
 	
-	if(typeof options.counterClockwise === undefined)
+	if(typeof options.counterClockwise === 'undefined')
 	{
 		this.ccw = false;
 	}
 	
-	if(typeof options.color === undefined){
+	if(typeof options.color === 'undefined'){
 		this.color = 'rgba(0,0,0,0)';
 	}
 	
-	if(typeof options.stroke === undefined){
+	if(typeof options.stroke === 'undefined'){
 		this.stroke = 0;
 	}
 	
-	if(typeof options.strokeColor === undefined){
+	if(typeof options.strokeColor === 'undefined'){
 		this.strokeColor = 'rgba(0,0,0,1)';
 	}
 }
