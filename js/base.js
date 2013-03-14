@@ -1,6 +1,9 @@
-var Camera = function(options){
-	this.x = options.x;
-	this.y = options.y;
+function extend(Child, Parent){
+	var F = function(){}
+	F.prototype = Parent.prototype;
+	Child.prototype = new F();
+	Child.prototype.constructor = Child;
+	Child.superclass = Parent.prototype;
 }
 
 var Scene = function(options){

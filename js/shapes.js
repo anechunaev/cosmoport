@@ -1,3 +1,10 @@
+/**
+ * @class Sprite
+ * @requires Transform
+ * @requires Vector2
+ * @constructor
+ * @param {Object} options
+ */
 var Sprite = function(options){
 
 	// Vars
@@ -15,32 +22,36 @@ var Sprite = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking if some important vars exists
-	if(options.rotation === undefined){
+	if(typeof options.rotation === undefined){
 		this.rot = 0;
 	}
 	
-	if(options.deltaWidth === undefined || options.deltaHeight === undefined){
+	if(typeof options.deltaWidth === undefined || typeof options.deltaHeight === undefined){
 		this.dw = this.w;
 		this.dh = this.h;
 	}
 	
-	if(options.dx === undefined){
+	if(typeof options.dx === undefined){
 		this.dx = 0;
 	}
 	
-	if(options.dy === undefined){
+	if(typeof options.dy === undefined){
 		this.dy = 0;
 	}
 	
-	if(options.width === undefined){
+	if(typeof options.width === undefined){
 		this.w = this.image.width;
 	}
 	
-	if(options.height === undefined){
+	if(typeof options.height === undefined){
 		this.h = this.image.height;
 	}
 }
 Sprite.prototype = {
+				/**
+				 * Drawing this object
+				 * @param {Object} ctx
+				 */
 	"Draw"	:	function(ctx){
 					if(!this.hidden){
 						if(this.rot != 0){
@@ -56,6 +67,14 @@ Sprite.prototype = {
 	"Update":	function(){}
 }
 
+
+/**
+ * @class Rect
+ * @requires Transform
+ * @requires Vector2
+ * @constructor
+ * @param {Object} options
+ */
 var Rect = function(options){
 
 	// Vars
@@ -71,23 +90,27 @@ var Rect = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking vars
-	if(options.rotation === undefined){
+	if(typeof options.rotation === undefined){
 		this.rot = 0;
 	}
 	
-	if(options.color === undefined){
+	if(typeof options.color === undefined){
 		this.color = 'rgba(0,0,0,0)';
 	}
 	
-	if(options.stroke === undefined){
+	if(typeof options.stroke === undefined){
 		this.stroke = 0;
 	}
 	
-	if(options.strokeColor === undefined){
+	if(typeof options.strokeColor === undefined){
 		this.strokeColor = 'rgba(0,0,0,1)';
 	}
 }
 Rect.prototype = {
+				/**
+				 * Drawing this object
+				 * @param {Object} ctx
+				 */
 	"Draw"	:	function(ctx){
 					if(!this.hidden){
 						if(this.rot != 0){
@@ -111,6 +134,14 @@ Rect.prototype = {
 	"Update":	function(){}
 }
 
+
+/**
+ * @class Circle
+ * @requires Transform
+ * @requires Vector2
+ * @constructor
+ * @param {Object} options
+ */
 var Circle = function(options){
 
 	// Vars
@@ -128,36 +159,40 @@ var Circle = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking vars
-	if(options.rotation === undefined){
+	if(typeof options.rotation === undefined){
 		this.rot = 0;
 	}
 	
-	if(options.startDegrees === undefined){
+	if(typeof options.startDegrees === undefined){
 		this.sdeg = 0;
 	}
 	
-	if(options.endDegrees === undefined){
+	if(typeof options.endDegrees === undefined){
 		this.edeg = Math.PI*2;
 	}
 	
-	if(options.counterClockwise === undefined)
+	if(typeof options.counterClockwise === undefined)
 	{
 		this.ccw = false;
 	}
 	
-	if(options.color === undefined){
+	if(typeof options.color === undefined){
 		this.color = 'rgba(0,0,0,0)';
 	}
 	
-	if(options.stroke === undefined){
+	if(typeof options.stroke === undefined){
 		this.stroke = 0;
 	}
 	
-	if(options.strokeColor === undefined){
+	if(typeof options.strokeColor === undefined){
 		this.strokeColor = 'rgba(0,0,0,1)';
 	}
 }
 Circle.prototype = {
+				/**
+				 * Drawing this object
+				 * @param {Object} ctx
+				 */
 	"Draw"	:	function(ctx){
 					if(!this.hidden){
 						if(this.rot != 0){
@@ -179,12 +214,4 @@ Circle.prototype = {
 				},
 	"Start"	:	function(){},
 	"Update":	function(){}
-}
-
-var CustomObject = function(options){
-
-	// Methods
-	this.Draw = function(){};
-	this.Start = function(){};
-	this.Update = function(){};
 }
