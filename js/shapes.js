@@ -5,6 +5,7 @@ var Sprite = function(options){
 	this.x = options.x;
 	this.y = options.y;
 	this.z = options.z;
+	this.rot = options.rotation;
 	this.w = options.width;
 	this.h = options.height;
 	this.dx = options.dx;
@@ -14,6 +15,10 @@ var Sprite = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking if some important vars exists
+	if(options.rotation === undefined){
+		this.rot = 0;
+	}
+	
 	if(options.deltaWidth === undefined || options.deltaHeight === undefined){
 		this.dw = this.w;
 		this.dh = this.h;
@@ -37,7 +42,15 @@ var Sprite = function(options){
 }
 Sprite.prototype = {
 	"Draw"	:	function(ctx){
-					if(!this.hidden) ctx.drawImage(this.image, this.dx, this.dy, this.dw, this.dh, this.x, this.y, this.w, this.h);
+					if(!this.hidden){
+						if(this.rot != 0){
+							ctx.rotate(this.rot);
+						}
+						ctx.drawImage(this.image, this.dx, this.dy, this.dw, this.dh, this.x, this.y, this.w, this.h);
+						if(this.rot != 0){
+							ctx.rotate(-this.rot);
+						}
+					}
 				},
 	"Start"	:	function(){},
 	"Update":	function(){}
@@ -49,6 +62,7 @@ var Rect = function(options){
 	this.x = options.x;
 	this.y = options.y;
 	this.z = options.z;
+	this.rot = options.rotation;
 	this.width = options.width;
 	this.height = options.height;
 	this.color = options.color;
@@ -57,6 +71,10 @@ var Rect = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking vars
+	if(options.rotation === undefined){
+		this.rot = 0;
+	}
+	
 	if(options.color === undefined){
 		this.color = 'rgba(0,0,0,0)';
 	}
@@ -72,6 +90,9 @@ var Rect = function(options){
 Rect.prototype = {
 	"Draw"	:	function(ctx){
 					if(!this.hidden){
+						if(this.rot != 0){
+							ctx.rotate(this.rot);
+						}
 						ctx.beginPath();
 						ctx.rect(this.x, this.y, this.width, this.height);
 						ctx.fillStyle = this.color;
@@ -80,6 +101,9 @@ Rect.prototype = {
 							ctx.lineWidth = this.stroke;
 							ctx.strokeStyle = this.strokeColor;
 							ctx.stroke();
+						}
+						if(this.rot != 0){
+							ctx.rotate(-this.rot);
 						}
 					}
 				},
@@ -93,6 +117,7 @@ var Circle = function(options){
 	this.x = options.x;
 	this.y = options.y;
 	this.z = options.z;
+	this.rot = options.rotation;
 	this.r = options.radius;
 	this.sdeg = options.startDegrees;
 	this.edeg = options.endDegrees;
@@ -103,6 +128,10 @@ var Circle = function(options){
 	this.hidden = options.hidden;
 	
 	// Checking vars
+	if(options.rotation === undefined){
+		this.rot = 0;
+	}
+	
 	if(options.startDegrees === undefined){
 		this.sdeg = 0;
 	}
@@ -131,6 +160,9 @@ var Circle = function(options){
 Circle.prototype = {
 	"Draw"	:	function(ctx){
 					if(!this.hidden){
+						if(this.rot != 0){
+							ctx.rotate(this.rot);
+						}
 						ctx.beginPath();
 						ctx.arc(this.x, this.y, this.r, this.sdeg, this.edeg, this.ccw);
 						ctx.fillStyle = this.color;
@@ -139,6 +171,9 @@ Circle.prototype = {
 							ctx.lineWidth = this.stroke;
 							ctx.strokeStyle = this.strokeColor;
 							ctx.stroke();
+						}
+						if(this.rot != 0){
+							ctx.rotate(-this.rot);
 						}
 					}
 				},
