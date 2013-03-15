@@ -1,13 +1,18 @@
-var Camera = function(options){
-	this.x = options.x;
-	this.y = options.y;
+function extend(Child, Parent){
+	var F = function(){}
+	F.prototype = Parent.prototype;
+	Child.prototype = new F();
+	Child.prototype.constructor = Child;
+	Child.superclass = Parent.prototype;
+}
+
+function isset(foo){
+	return typeof foo !== 'undefined';
 }
 
 var Scene = function(options){
-	this.dx = options.dx;
-	this.dy = options.dy;
 	this.width = options.width;
-	this.wheight = options.height;
+	this.height = options.height;
 	this.objects = options.objects;
 	this.sources = options.sources;
 	
@@ -23,12 +28,12 @@ var Game = {
 	Start : function(options){
 		this.status = 'loading';
 		this.scene = options.scene;
-		this.cnv.width = window.innerWidth - 3;
-		this.cnv.height = window.innerHeight - 3;
+		this.cnv.width = this.scene.width;
+		this.cnv.height = this.scene.height;
 
 		// Insertion sort
 		for(var i in this.scene.objects){
-			if(this.scene.objects[i].z === undefined){this.scene.objects[i].z = i}
+			if(!isset(this.scene.objects[i].z)) this.scene.objects[i].z = i;
 			var obj = this.scene.objects[i];
 			var key = obj.z;
 			for(j = i-1; j > -1 && this.scene.objects[j].z > key; j--){
@@ -71,7 +76,7 @@ var Game = {
 		
 		if(this.status == 'ready'){
 			this.status = 'run';
-			setInterval(function(){ Game.Draw() }, 17);
+			setInterval(function(){ Game.Draw() }, 18);
 		}
 	}
 };
