@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Cosmoport</title>
+	<link type="text/css" rel="stylesheet" media="all" href="css/style.css?v=1" />
+</head>
+<body>
+	<canvas id="cnv"></canvas>
+	<script src="js/base.js"></script>
+	<script src="js/time.js"></script>
+	<script src="js/vector.js"></script>
+	<script src="js/transform.js"></script>
+	<script src="js/shapes.js"></script>
+	<script>
+	
+var tileset = new Image();
+tileset.src = 'images/tileset.png';
+var test = new Image();
+test.src = 'images/test.jpg';
+
+var pic1 = new Sprite({image:tileset, size: new Vector2(64,64), delta: new Vector2(160,128), position: new Vector2(100, 100), angle:Math.PI/4});
+var pic2 = new Sprite({image:tileset, size: new Vector2(64,64), position: new Vector2(200, 100), localPosition: new Vector2(32,32)});
+pic2.Start = function(){
+	this.rotAngle = 0;
+	this.trigger = true;
+}
+pic2.Update = function(){
+	if(this.rotAngle >= 360) this.rotAngle = 0;
+	if(this.rotAngle < 0) this.rotAngle = 360;
+	
+	if(this.trigger){
+		if(this.position.x >= scene1.width - 200){
+			this.trigger = !this.trigger;
+		}
+		else {
+			this.position.x+=1.3;
+			this.rotAngle+=2;
+		}
+	}
+	else {
+		if(this.position.x <= 200){
+			this.trigger = !this.trigger;
+		}
+		else {
+			this.position.x-=1.3;
+			this.rotAngle-=2;
+		}
+	}
+	this.angle = this.rotAngle*Math.PI/180;
+}
+var pic3 = new Sprite({image:test});
+
+var scene1 = new Scene({width:1000,height:1000,objects:[pic3, pic1, pic2], sources:[tileset, test]});
+
+window.onload = function(){
+	Game.Run({scene : scene1});
+}
+
+	</script>
+</body>
+</html>
