@@ -3,10 +3,27 @@
  * @constructor
  */
 var Time = function(){
-	this.time; // The time this frame has started. This is the time in seconds since the start of the game.
-	this.timeSinceLevelLoad; // The time this frame has started. This is the time in seconds since the last level has been loaded.
-	this.deltaTime; // The time in seconds it took to complete the last frame.
-	this.smoothDeltaTime; // A smoothed out Time.deltaTime.
-	this.timeScale; // The scale at which the time is passing. This can be used for slow motion effects.
-	this.frameCount; // The total number of frames that have passed.
+	this.time = 0;
+	this.sceneLoaded = 0;
+	this.lastFrame = 0;
+	this.sinceSceneLoaded = 0;
+	this.deltaTime = 0;
+	this.timeScale = 0;
+	this.frameCount = 0;
+	this.totalFrames = 0;
+	this.avfps = 0;
+	this.fps = 0;
+	this.Tick = function(){
+		this.time = Date.now();
+		this.sinceSceneLoaded = this.time - this.sceneLoaded;
+		this.deltaTime = this.time - this.lastFrame;
+		this.lastFrame = this.time;
+		this.frameCount++;
+		this.totalFrames++;
+		this.avfps = Math.round(1000*this.totalFrames/this.sinceSceneLoaded);
+	}
+	this.Framerate = function(){
+		this.fps = this.frameCount;
+		this.frameCount = 0;
+	}
 }

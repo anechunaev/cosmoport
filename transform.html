@@ -7,11 +7,10 @@
 </head>
 <body>
 	<canvas id="cnv"></canvas>
-	<script src="js/base.js"></script>
 	<script src="js/time.js"></script>
 	<script src="js/vector.js"></script>
-	<script src="js/transform.js"></script>
 	<script src="js/shapes.js"></script>
+	<script src="js/base.js"></script>
 	<script>
 	
 var tileset = new Image();
@@ -51,7 +50,12 @@ pic2.Update = function(){
 }
 var pic3 = new Sprite({image:test});
 
-var scene1 = new Scene({width:1000,height:1000,objects:[pic3, pic1, pic2], sources:[tileset, test]});
+var showFPS = new Text({position: new Vector2(4,8), z:99});
+showFPS.Update = function(){
+	this.text = 'FPS: ' + Game.time.fps;
+}
+
+var scene1 = new Scene({width:1000,height:1000,objects:[pic3, pic1, pic2, showFPS], sources:[tileset, test]});
 
 window.onload = function(){
 	Game.Run({scene : scene1});

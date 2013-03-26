@@ -7,8 +7,10 @@
 </head>
 <body>
 	<canvas id="cnv"></canvas>
-	<script src="js/base.js"></script>
+	<script src="js/time.js"></script>
+	<script src="js/vector.js"></script>
 	<script src="js/shapes.js"></script>
+	<script src="js/base.js"></script>
 	<script>
 	
 var tileset = new Image();
@@ -18,47 +20,52 @@ testp1.src = 'images/test.jpg';
 var testp2 = new Image();
 testp2.src = 'images/urok1.6.png';
 
-var tile = new Sprite({image:tileset, x:200, y:200, z:999, width:32, height:32, dx:96, dy:0});
+var tile = new Sprite({image:tileset, position:new Vector2(200,200), z:999, size:new Vector2(32,32), delta:new Vector2(96,0)});
 
-var rect1 = new Rect({x:20,y:20,width:300,height:150,color:'#39C',stroke:4,strokeColor:'#FFF'});
+var rect1 = new Rect({position:new Vector2(32,32),size:new Vector2(300,150),color:'#39C',stroke:4,strokeColor:'#FFF'});
 rect1.Start = function(){
 	this.moveTrigger = true;
 }
 rect1.Update = function(){
 	if(this.moveTrigger){
-		this.y += 5;
+		this.position.y += 5;
 	} else {
-		this.y -= 5;
+		this.position.y -= 5;
 	}
 	
-	if(this.y <= 4 || this.y >= window.innerHeight-this.height-4){
+	if(this.position.y <= 4 || this.position.y >= window.innerHeight-this.size.y-4){
 		this.moveTrigger = !this.moveTrigger;
 	}
 }
 
-var test1 = new Sprite({image:testp1,x:250,y:250,width:64,height:100,dx:96,deltaWidth:128,deltaHeight:128,hidden:true});
+var test1 = new Sprite({image:testp1,position:new Vector2(50,50),size:new Vector2(64,100),delta:new Vector2(96,0),deltaScale:new Vector2(128,128),hidden:true});
 
-var rect2 = new Rect({x:50,y:300,width:230,height:400,color:'rgba(255,128,0,0.5)',stroke:8,strokeColor:'rgba(88,0,0,0.7)'});
+var rect2 = new Rect({position:new Vector2(50,300),size:new Vector2(230,400),color:'rgba(255,128,0,0.5)',stroke:8,strokeColor:'rgba(88,0,0,0.7)'});
 rect2.Start = function(){
 	this.moveTrigger = true;
 }
 rect2.Update = function(){
 	if(this.moveTrigger){
-		this.x += 7;
+		this.position.x += 7;
 	} else {
-		this.x -= 7;
+		this.position.x -= 7;
 	}
 	
-	if(this.x <= 8 || this.x >= scene1.width-this.width-8){
+	if(this.position.x <= 8 || this.position.x >= scene1.width-this.size.x-8){
 		this.moveTrigger = !this.moveTrigger;
 	}
 }
 
-var test2 = new Sprite({image:testp2, x:200, y:300, width:196, height:184});
-var circ1 = new Circle({x:50,y:250,radius:200,startDegrees:Math.PI/2,endDegrees:3*Math.PI/2,counterClockwise:true,color:'rgba(0,0,0,0)',stroke:50,strokeColor:'#FFF'});
-var circ2 = new Circle({x:300, y:300, radius:20, color:'#FFF'});
+var test2 = new Sprite({image:testp2, position:new Vector2(200,300), size:new Vector2(196,184)});
+var circ1 = new Circle({position:new Vector2(50,250),radius:200,startDegrees:Math.PI/2,endDegrees:3*Math.PI/2,counterClockwise:true,color:'rgba(0,0,0,0)',stroke:50,strokeColor:'#FFF'});
+var circ2 = new Circle({position:new Vector2(300,300), radius:20, color:'#FFF'});
 
-var scene1 = new Scene({x:0,y:0,width:1000,height:1000,objects:[tile, rect1, test1, rect2, test2, circ1, circ2], sources:[tileset,testp1,testp2]});
+var showFPS = new Text({position: new Vector2(4,8), z:99});
+showFPS.Update = function(){
+	this.text = 'FPS: ' + Game.time.fps;
+}
+
+var scene1 = new Scene({width:1000,height:1000,objects:[tile, rect1, test1, rect2, test2, circ1, circ2, showFPS], sources:[tileset,testp1,testp2]});
 
 window.onload = function(){
 	Game.Run({scene : scene1});

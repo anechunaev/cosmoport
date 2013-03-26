@@ -1,3 +1,14 @@
+window.requestAnimFrame = (function(callback){
+    return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(callback){
+        window.setTimeout(callback, 1000 / 60);
+    };
+})();
+
 function extend(Child, Parent){
 	var F = function(){}
 	F.prototype = Parent.prototype;
@@ -24,6 +35,7 @@ var Game = {
 	ctx : document.getElementById("cnv").getContext("2d"),
 	status : 'init',
 	scene : {},
+	time : new Time(),
 	
 	Start : function(options){
 		this.status = 'loading';
@@ -55,6 +67,9 @@ var Game = {
 			if(this.scene.sources.length==0) break;
 		}
 		
+		this.time.sceneLoaded = Date.now();
+		this.time.Tick();
+		
 		// Run "Start" functions
 		for(var i in this.scene.objects){
 			this.scene.objects[i].Start();
@@ -62,7 +77,9 @@ var Game = {
 	},
 	
 	Draw : function(){
+		requestAnimFrame(function(){Game.Draw()});
 		this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
+		this.time.Tick();
 		
 		for(var i in this.scene.objects){
 			this.scene.objects[i].Update();
@@ -72,11 +89,12 @@ var Game = {
 	},
 	
 	Run : function(options){
+		setInterval(function(){Game.time.Framerate()}, 1000);
 		this.Start(options);
 		
 		if(this.status == 'ready'){
 			this.status = 'run';
-			setInterval(function(){ Game.Draw() }, 18);
+			this.Draw();
 		}
 	}
 };
